@@ -1,0 +1,120 @@
+** start of index.html **
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lightbox Viewer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="gallery">
+    <img class="gallery-item" src="https://cdn.freecodecamp.org/curriculum/labs/stonehenge-thumbnail.jpg" alt="Stonehenge">
+    <img class="gallery-item" src="https://cdn.freecodecamp.org/curriculum/labs/storm-thumbnail.jpg" alt="Storm">
+    <img class="gallery-item" src="https://cdn.freecodecamp.org/curriculum/labs/trees-thumbnail.jpg" alt="Trees">
+  </div>
+
+  <div class="lightbox">
+    <button id="close-btn">&times;</button>
+    <img id="lightbox-image" src="" alt="Preview">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+** end of index.html **
+
+** start of styles.css **
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #f4f4f4;
+}
+
+.gallery {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px;
+}
+
+.gallery-item {
+  width: 150px;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  transition: transform 0.2s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.05);
+}
+
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+#close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+#lightbox-image {
+  max-width: 90%;
+  max-height: 80%;
+  margin-top: 30px;
+  box-shadow: 0 0 15px #000;
+}
+
+
+** end of styles.css **
+
+** start of script.js **
+
+const galleryItems = document.querySelectorAll('.gallery-item');
+const lightbox = document.querySelector('.lightbox');
+const lightboxImage = document.getElementById('lightbox-image');
+const closeBtn = document.getElementById('close-btn');
+
+// Show lightbox on click
+galleryItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const fullSizeSrc = item.src.replace('-thumbnail', '');
+    lightboxImage.src = fullSizeSrc;
+    lightbox.style.display = 'flex';
+  });
+});
+
+// Hide lightbox on click
+closeBtn.addEventListener('click', () => {
+  lightbox.style.display = 'none';
+});
+
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox || e.target === closeBtn) {
+    lightbox.style.display = 'none';
+  }
+});
+
+
+** end of script.js **
+
